@@ -16,3 +16,6 @@ nbproject/genfiles.properties
 manifest.mf
 nbproject/private/private.properties
 nbproject/private/private.xml
+/nbproject/private/
+build/built-jar.properties
+src/MainTahap2.java
