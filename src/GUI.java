@@ -34,12 +34,15 @@ public class GUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bg_pilihanProses = new javax.swing.ButtonGroup();
         Textfield_input = new javax.swing.JTextField();
         jButton_submit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_output = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        l_judul = new javax.swing.JLabel();
         l_validitas = new javax.swing.JLabel();
+        rb_expression = new javax.swing.JRadioButton();
+        rb_lexic = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -68,43 +71,57 @@ public class GUI extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable_output);
 
-        jLabel1.setBackground(new java.awt.Color(255, 204, 102));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 153));
-        jLabel1.setText("Arithmatic Expression Parser");
+        l_judul.setBackground(new java.awt.Color(255, 204, 102));
+        l_judul.setFont(new java.awt.Font("Tahoma", 2, 24)); // NOI18N
+        l_judul.setForeground(new java.awt.Color(0, 0, 153));
+        l_judul.setText("Arithmatic Expression Parser");
 
         l_validitas.setText("STATUS: ");
+
+        bg_pilihanProses.add(rb_expression);
+        rb_expression.setSelected(true);
+        rb_expression.setText("Expression");
+
+        bg_pilihanProses.add(rb_lexic);
+        rb_lexic.setText("Lexic");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addComponent(l_judul, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(Textfield_input, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(rb_expression)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton_submit)))
+                            .addComponent(rb_lexic)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton_submit))
+                        .addComponent(Textfield_input, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(l_validitas))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(l_judul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
+                .addComponent(Textfield_input, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Textfield_input, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rb_expression)
+                    .addComponent(rb_lexic)
                     .addComponent(jButton_submit))
-                .addGap(39, 39, 39)
+                .addGap(5, 5, 5)
                 .addComponent(l_validitas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,25 +139,42 @@ public class GUI extends javax.swing.JFrame {
     private void jButton_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_submitActionPerformed
         // TODO add your handling code here:
         String x = Textfield_input.getText();
-        Tahap1.Proses(x, str, lexic);
+        if (rb_expression.isSelected()) {
+            Tahap1.Proses(x, str, lexic);
 
-        String[] title1 = {"Expression", "TokenLexic"};
-        String[][] data1 = new String[str.size()][];
-        for (int i = 0; i < str.size(); i++) {
-            data1[i] = new String[2];
-            data1[i][0] = str.get(i);
-            data1[i][1] = lexic.get(i) + "";
+            String[] title1 = {"Expression", "TokenLexic"};
+            String[][] data1 = new String[str.size()][];
+            for (int i = 0; i < str.size(); i++) {
+                data1[i] = new String[2];
+                data1[i][0] = str.get(i);
+                data1[i][1] = lexic.get(i) + "";
+            }
+            jTable_output.setModel(new DefaultTableModel(data1, title1));
+        } else {
+            lexic = translateToArrayList(x);
+            jTable_output.setModel(new DefaultTableModel(0, 0));
         }
         if (Tahap2.checkLexic(lexic)) {
             l_validitas.setText("STATUS: VALID");
         } else {
             l_validitas.setText("STATUS: TIDAK VALID");
         }
-        jTable_output.setModel(new DefaultTableModel(data1, title1));
 
 
     }//GEN-LAST:event_jButton_submitActionPerformed
 
+    public ArrayList<Integer> translateToArrayList(String s){
+        ArrayList<Integer> result = new ArrayList();
+        char[] c = s.toCharArray();
+        for (char d : c) {
+            if (d == '0') {
+                result.add(-1);
+            } else {
+                result.add(Integer.parseInt(d + ""));
+            }
+        }
+        return result;
+    }
     /**
      * @param args the command line arguments
      */
@@ -178,11 +212,14 @@ public class GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Textfield_input;
+    private javax.swing.ButtonGroup bg_pilihanProses;
     private javax.swing.JButton jButton_submit;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_output;
+    private javax.swing.JLabel l_judul;
     private javax.swing.JLabel l_validitas;
+    private javax.swing.JRadioButton rb_expression;
+    private javax.swing.JRadioButton rb_lexic;
     // End of variables declaration//GEN-END:variables
 
 }
