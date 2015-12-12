@@ -11,23 +11,13 @@ import java.util.List;
 /**
  *
  *
- * Token Lexic 
-  1 : Variabel 
-  2 : Real 
-  3 : Integer 
-  4 : ( 
-  5 : ) 
-  6 : + 
-  7 : - 
-  8 : * 
-  9 : /
+ * Token Lexic 1 : Variabel 2 : Real 3 : Integer 4 : ( 5 : ) 6 : + 7 : - 8 : * 9
+ * : /
  *
  * Variabel, Real, Inteer dapat dianggap satu = A ( = B ) = C +, -, *, / = D ~ =
  * finish
  *
- * -- PDA -- 
- * S = 1AS | 2AS | 3AS | 4S5 | ~ 
- * A = 6 | 7 | 8 | 9 | ~
+ * -- PDA -- S = 1AS | 2AS | 3AS | 4S5 | ~ A = 6 | 7 | 8 | 9 | ~
  *
  * @author adliih
  */
@@ -42,7 +32,7 @@ public class Tahap2 {
 
         Iterator<Integer> it = lexics.iterator();
         Integer symbol = it.next();
-        while (pdaStack.top() != '#') {
+        while (pdaStack.top() != '#' ) {
             if (symbol == -1) {
                 return false;
             }
@@ -51,8 +41,6 @@ public class Tahap2 {
                     pdaStack.pop();
                     if (it.hasNext()) {
                         symbol = it.next();
-                    } else if (symbol == '5') {
-                        pdaStack.pop();
                     } else {
                         symbol = 0;
                     }
@@ -69,8 +57,6 @@ public class Tahap2 {
                 String temp = tableModel[idx][symbol];
                 if (temp.equals("err")) {
                     return false;
-                } else if (temp.equals("success")) {
-                    return true;
                 } else if (temp.equals("blank")) {
                     pdaStack.pop();
                 } else {
@@ -78,6 +64,9 @@ public class Tahap2 {
                     pdaStack.push(temp);
                 }
             }
+        }
+        if (symbol != 0) {
+            return false;
         }
         return true;
     }
@@ -97,7 +86,7 @@ public class Tahap2 {
         tableModel[0][7] = "err";
         tableModel[0][8] = "err";
         tableModel[0][9] = "err";
-        tableModel[0][0] = "err";
+        tableModel[0][0] = "blank";
 
         tableModel[1][1] = "err";
         tableModel[1][2] = "err";
@@ -108,7 +97,7 @@ public class Tahap2 {
         tableModel[1][7] = "7";
         tableModel[1][8] = "8";
         tableModel[1][9] = "9";
-        tableModel[1][0] = "success";
+        tableModel[1][0] = "blank";
     }
 
     public static class Stack {
