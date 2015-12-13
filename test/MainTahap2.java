@@ -16,7 +16,6 @@ public class MainTahap2 {
     public static void main(String[] args) {
         ArrayList<Integer> lexics = new ArrayList<>();
 
-
         Scanner sc = new Scanner(System.in);
         int n = 1;
         for (int i = 0; i < n; i++) {
