@@ -24,6 +24,7 @@ import java.util.List;
 public class Tahap2 {
 
     static String[][] tableModel;
+    static char[] nonTerminal = {'S', 'A', 'B', '#'};
 
     public static boolean checkLexic(List<Integer> lexics) {
         Stack pdaStack = new Stack();
@@ -48,11 +49,9 @@ public class Tahap2 {
                     return false;
                 }
             } else {
-                int idx = -1;
-                if (pdaStack.top() == 'S') {
-                    idx = 0;
-                } else {
-                    idx = 1;
+                int idx = pdaStack.getIndexNonTerminal(pdaStack.top());
+                if (idx == -1) {
+                    return false;
                 }
                 String temp = tableModel[idx][symbol];
                 if (temp.equals("err")) {
@@ -72,32 +71,48 @@ public class Tahap2 {
     }
 
     public static void createTableModel() {
-        tableModel = new String[2][];
-        for (int i = 0; i < 2; i++) {
+        int n = 3;
+        tableModel = new String[n][];
+        for (int i = 0; i < n; i++) {
             tableModel[i] = new String[10];
             // Index ke 0 adalah End Of String
         }
-        tableModel[0][1] = "1AS";
-        tableModel[0][2] = "2AS";
-        tableModel[0][3] = "3AS";
-        tableModel[0][4] = "4S5AS";
-        tableModel[0][5] = "blank";
+        // S
+        tableModel[0][1] = "1A";
+        tableModel[0][2] = "2A";
+        tableModel[0][3] = "3A";
+        tableModel[0][4] = "4B5A";
+        tableModel[0][5] = "err";
         tableModel[0][6] = "err";
         tableModel[0][7] = "err";
         tableModel[0][8] = "err";
         tableModel[0][9] = "err";
         tableModel[0][0] = "blank";
 
+        // A
         tableModel[1][1] = "err";
         tableModel[1][2] = "err";
         tableModel[1][3] = "err";
         tableModel[1][4] = "err";
         tableModel[1][5] = "blank";
-        tableModel[1][6] = "6";
-        tableModel[1][7] = "7";
-        tableModel[1][8] = "8";
-        tableModel[1][9] = "9";
+        tableModel[1][6] = "6B";
+        tableModel[1][7] = "7B";
+        tableModel[1][8] = "8B";
+        tableModel[1][9] = "9B";
         tableModel[1][0] = "blank";
+        
+        //B
+        tableModel[2][1] = "1A";
+        tableModel[2][2] = "2A";
+        tableModel[2][3] = "3A";
+        tableModel[2][4] = "4B5A";
+        tableModel[2][5] = "err";
+        tableModel[2][6] = "err";
+        tableModel[2][7] = "err";
+        tableModel[2][8] = "err";
+        tableModel[2][9] = "err";
+        tableModel[2][0] = "err";
+        
     }
 
     public static class Stack {
@@ -144,10 +159,21 @@ public class Tahap2 {
         }
 
         public boolean isTerminal(char x) {
-            if ((x == 'A') || (x == 'S') || (x == '#')) {
-                return false;
+            for (char c : nonTerminal) {
+                if (c == x) {
+                    return false;
+                }
             }
             return true;
+        }
+        
+        public int getIndexNonTerminal(char nonTerminalChar){
+            for (int i = 0; i < nonTerminal.length; i++) {
+                if (nonTerminal[i] == nonTerminalChar) {
+                    return i;
+                }
+            }
+            return -1;
         }
     }
 
