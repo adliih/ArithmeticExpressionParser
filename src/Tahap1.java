@@ -13,8 +13,8 @@ import java.util.Scanner;
  * @author Andri-Dhika
  */
 public class Tahap1 {
-    
-    public static void Proses(String n, List<String>  str, List<Integer> lexic) {
+
+    public static void Proses(String n, List<String> str, List<Integer> lexic) {
         String temp = " ";
         char[] array = n.toCharArray();
         int tokenlexic = 0;
@@ -62,6 +62,7 @@ public class Tahap1 {
                                 tokenlexic = 3;
                             } else if (array[i] == 'E') {
                                 state = "q2";
+                                tokenlexic = 2;
                             } else if (array[i] == ',' || array[i] == '.') {
                                 state = "q3";
                             } else if (array[i] == '+' || array[i] == '-' || array[i] == '*' || array[i] == '/' || array[i] == '(' || array[i] == ')') {
@@ -76,10 +77,16 @@ public class Tahap1 {
                             if (array[i] - 48 >= 0 && array[i] - 48 <= 9) {
                                 state = "q6";
                                 tokenlexic = 2;
-                            } else if (array[i] == ',' || array[i] == '.') {
+                            } else if (array[i] == '+' || array[i] == '-') {
                                 state = "q5";
-                            } else {
+                            } else if ((array[i] >= 65 && array[i] <= 90) || (array[i] >= 97 && array[i] <= 122) || array[i] == '_' || array[i] == '.' || array[i] == ',') {
                                 tokenlexic = -1;
+                                break;
+                            } else {
+                                tokenlexic = 2;
+                                state = "q0";
+                                i--;
+                                break;
                             }
                         } else if (state.equals("q3")) {
                             if (array[i] - 48 >= 0 && array[i] - 48 <= 9) {
@@ -250,5 +257,5 @@ public class Tahap1 {
         }
         return false;
     }
-    
+
 }
